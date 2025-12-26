@@ -91,13 +91,25 @@
 
 :root {
     --background: hsl(0 0% 100%);
-    --foreground: hsl(0 0% 3.9%);
+    --foreground: hsl(173 50% 10%); /* Dark Teal Text */
     --card: hsl(0 0% 100%);
-    --card-foreground: hsl(0 0% 3.9%);
+    --card-foreground: hsl(173 50% 10%);
     --popover: hsl(0 0% 100%);
-    --popover-foreground: hsl(0 0% 3.9%);
-    --primary: hsl(0 0% 9%);
-    --primary-foreground: hsl(0 0% 98%);
+    --popover-foreground: hsl(173 50% 10%);
+    --primary: hsl(173 58% 39%); /* Teal Base for "Creciendo Juntos" */
+    --primary-foreground: hsl(0 0% 100%);
+    --secondary: hsl(35 90% 65%); /* Warm Accent (Amber/Orange) */
+    --secondary-foreground: hsl(35 90% 10%);
+    --muted: hsl(173 20% 96%);
+    --muted-foreground: hsl(173 20% 40%);
+    --accent: hsl(173 30% 90%);
+    --accent-foreground: hsl(173 58% 30%);
+    --destructive: hsl(0 84% 60%);
+    --destructive-foreground: hsl(0 0% 98%);
+    --border: hsl(173 20% 90%);
+    --input: hsl(173 20% 90%);
+    --ring: hsl(173 58% 39%);
+    --radius: 0.5rem;
     --secondary: hsl(0 0% 92.1%);
     --secondary-foreground: hsl(0 0% 9%);
     --muted: hsl(0 0% 96.1%);

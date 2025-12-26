@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import { home } from '@/routes';
 import { Link } from '@inertiajs/vue3';
 
@@ -21,16 +20,15 @@ defineProps<{
                         class="flex flex-col items-center gap-2 font-medium"
                     >
                         <div
-                            class="mb-1 flex h-9 w-9 items-center justify-center rounded-md"
+                            class="mb-2 flex h-20 w-20 items-center justify-center rounded-full overflow-hidden bg-white shadow-sm"
                         >
-                            <AppLogoIcon
-                                class="size-9 fill-current text-[var(--foreground)] dark:text-white"
-                            />
+                             <img src="/logo-creciendo-juntos.png" alt="Creciendo Juntos Logo" class="h-full w-full object-cover" />
                         </div>
+                        <span class="text-xl font-bold text-primary tracking-tight">Creciendo Juntos</span>
                         <span class="sr-only">{{ title }}</span>
                     </Link>
                     <div class="space-y-2 text-center">
-                        <h1 class="text-xl font-medium">{{ title }}</h1>
+                        <h1 class="text-xl font-medium text-foreground">{{ title }}</h1>
                         <p class="text-center text-sm text-muted-foreground">
                             {{ description }}
                         </p>
