@@ -3,7 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { Brain, Heart, Users, Baby, Briefcase, Smile, Check } from 'lucide-vue-next';
+import { Brain, Heart, Users, Baby, Briefcase, Smile, Check, ArrowRight, Calendar, MessageCircle, FileText, CheckCircle2 } from 'lucide-vue-next';
 
 const services = [
     {
@@ -53,6 +53,60 @@ const services = [
         icon: Smile,
         color: 'text-orange-500',
         bg: 'bg-orange-50'
+    }
+];
+
+const processSteps = [
+    {
+        number: '01',
+        title: 'Contacto Inicial',
+        description: 'Agenda tu cita a través de la web o WhatsApp. Resolveremos tus dudas iniciales.',
+        icon: MessageCircle
+    },
+    {
+        number: '02',
+        title: 'Primera Entrevista',
+        description: 'Evaluación inicial para conocer tu historia y definir los objetivos terapéuticos.',
+        icon: Calendar
+    },
+    {
+        number: '03',
+        title: 'Plan de Tratamiento',
+        description: 'Diseñamos juntos una estrategia personalizada con herramientas prácticas.',
+        icon: FileText
+    },
+    {
+        number: '04',
+        title: 'Seguimiento y Alta',
+        description: 'Sesiones regulares para trabajar en tus metas hasta lograr tu autonomía.',
+        icon: CheckCircle2
+    }
+];
+
+const pricingPlans = [
+    {
+        name: 'Sesión Individual',
+        price: 'S/ 100',
+        period: '/ sesión',
+        description: 'Ideal para procesos personales continuos.',
+        features: ['50 minutos de duración', 'Modalidad online o presencial', 'Material de apoyo digital', 'Seguimiento por WhatsApp'],
+        recommended: false
+    },
+    {
+        name: 'Paquete Mensual',
+        price: 'S/ 360',
+        period: '/ 4 sesiones',
+        description: 'Compromiso con tu bienestar a mejor precio.',
+        features: ['4 sesiones de 50 minutos', 'Ahorro del 10%', 'Prioridad en agendamiento', 'Material exclusivo'],
+        recommended: true
+    },
+    {
+        name: 'Terapia de Pareja',
+        price: 'S/ 150',
+        period: '/ sesión',
+        description: 'Espacio para construir juntos.',
+        features: ['60 minutos de duración', 'Ejercicios prácticos para casa', 'Evaluación de la dinámica', 'Mediación de conflictos'],
+        recommended: false
     }
 ];
 </script>
@@ -107,6 +161,83 @@ const services = [
             </div>
         </section>
 
+        <!-- Process Section -->
+        <section class="py-20 bg-muted/30">
+            <div class="container mx-auto px-4">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-bold mb-4">¿Cómo es el proceso?</h2>
+                    <p class="text-muted-foreground text-lg">
+                        Un camino estructurado y claro para que sepas qué esperar en cada etapa de tu tratamiento.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                     <!-- Connecting Line (Desktop) -->
+                    <div class="hidden md:block absolute top-12 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/20 to-transparent -z-10"></div>
+
+                    <div v-for="(step, index) in processSteps" :key="index" class="relative flex flex-col items-center text-center group">
+                        <div class="w-24 h-24 rounded-full bg-white border-4 border-muted group-hover:border-primary transition-colors flex items-center justify-center mb-6 shadow-sm z-10">
+                            <component :is="step.icon" class="w-10 h-10 text-primary" />
+                        </div>
+                        <div class="absolute top-0 right-0 bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full transform translate-x-2 -translate-y-2">
+                            {{ step.number }}
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">{{ step.title }}</h3>
+                        <p class="text-muted-foreground text-sm leading-relaxed max-w-xs">
+                            {{ step.description }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section class="py-20">
+            <div class="container mx-auto px-4">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl font-bold mb-4">Inversión en tu Bienestar</h2>
+                    <p class="text-muted-foreground text-lg">
+                        Tarifas claras y accesibles. Tu salud mental es una prioridad.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <Card v-for="(plan, index) in pricingPlans" :key="index" 
+                        class="relative flex flex-col border-muted hover:border-primary transition-colors hover:shadow-lg"
+                        :class="{ 'border-primary shadow-lg scale-105 z-10': plan.recommended }"
+                    >
+                        <div v-if="plan.recommended" class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
+                            Más Popular
+                        </div>
+                        <CardHeader class="text-center pb-2">
+                            <CardTitle class="text-xl mb-2">{{ plan.name }}</CardTitle>
+                            <div class="flex items-baseline justify-center gap-1">
+                                <span class="text-4xl font-bold text-foreground">{{ plan.price }}</span>
+                                <span class="text-muted-foreground text-sm">{{ plan.period }}</span>
+                            </div>
+                            <CardDescription class="mt-2">
+                                {{ plan.description }}
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent class="flex-grow pt-6">
+                            <ul class="space-y-4">
+                                <li v-for="(feature, idx) in plan.features" :key="idx" class="flex items-start gap-3 text-sm text-muted-foreground">
+                                    <CheckCircle2 class="w-5 h-5 text-primary shrink-0" />
+                                    <span>{{ feature }}</span>
+                                </li>
+                            </ul>
+                        </CardContent>
+                        <CardFooter>
+                            <Link href="/contact" class="w-full">
+                                <Button :variant="plan.recommended ? 'default' : 'outline'" class="w-full h-12 rounded-full">
+                                    Elegir Plan
+                                </Button>
+                            </Link>
+                        </CardFooter>
+                    </Card>
+                </div>
+            </div>
+        </section>
 
         <!-- Pricing / CTA -->
         <section class="py-20 bg-slate-50 dark:bg-slate-900/50">

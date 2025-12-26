@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 import { Button } from '@/components/ui/button';
-import { Link } from '@inertiajs/vue3';
 import { ArrowRight, BookOpen, Award, GraduationCap, Briefcase, UserCheck, Brain, Heart } from 'lucide-vue-next';
 
 const experience = [

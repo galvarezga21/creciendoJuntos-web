@@ -3,12 +3,76 @@ import { Head, Link } from '@inertiajs/vue3';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { ArrowRight, Heart, Shield, Sparkles, Brain } from 'lucide-vue-next';
+import { ArrowRight, Heart, Shield, Sparkles, Brain, Quote, Star, ChevronDown, CheckCircle2, Calendar, Clock, ArrowUpRight } from 'lucide-vue-next';
 
 defineProps<{
     canLogin?: boolean;
     canRegister?: boolean;
 }>();
+
+const testimonials = [
+    {
+        text: "La terapia con Diana cambió mi vida. Aprendí a gestionar mi ansiedad y ahora disfruto mucho más de mi día a día.",
+        name: "María G.",
+        initial: "M"
+    },
+    {
+        text: "Un espacio seguro donde realmente te sientes escuchado. Las herramientas que me brindó fueron muy prácticas y efectivas.",
+        name: "Carlos R.",
+        initial: "C"
+    },
+    {
+        text: "Llevé a mi hijo por problemas de conducta y el cambio ha sido notable. Estamos muy agradecidos por su paciencia y dedicación.",
+        name: "Ana P.",
+        initial: "A"
+    }
+];
+
+const faqs = [
+    {
+        question: "¿Cómo sé si necesito terapia?",
+        answer: "Si sientes que tus emociones afectan tu vida diaria, relaciones o trabajo, o si simplemente buscas crecimiento personal, la terapia es una excelente opción. No necesitas tener un 'problema grave' para beneficiarte de ella."
+    },
+    {
+        question: "¿Cuánto dura cada sesión?",
+        answer: "Las sesiones tienen una duración aproximada de 50 a 60 minutos. La frecuencia se determina según tus necesidades específicas en la primera consulta."
+    },
+    {
+        question: "¿Aceptan seguros médicos?",
+        answer: "Actualmente trabajamos de manera particular, pero emitimos recibos que pueden ser presentados a tu seguro para reembolso, dependiendo de tu póliza."
+    },
+    {
+        question: "¿Es confidencial?",
+        answer: "Absolutamente. Todo lo conversado en sesión está protegido por el secreto profesional y ética psicológica, salvo situaciones de riesgo inminente para ti o terceros."
+    }
+];
+
+const blogPosts = [
+    {
+        title: "5 Técnicas de Mindfulness para reducir la ansiedad",
+        excerpt: "Descubre ejercicios sencillos que puedes practicar en cualquier lugar para recuperar la calma y el enfoque.",
+        category: "Bienestar",
+        date: "20 Dic, 2024",
+        readTime: "5 min",
+        image: "https://images.unsplash.com/photo-1544367563-12123d8965cd?q=80&w=2070&auto=format&fit=crop"
+    },
+    {
+        title: "Cómo establecer límites saludables en familia",
+        excerpt: "Aprende a decir 'no' desde el amor y el respeto para mejorar la convivencia y fortalecer los vínculos familiares.",
+        category: "Familia",
+        date: "15 Dic, 2024",
+        readTime: "7 min",
+        image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=2070&auto=format&fit=crop"
+    },
+    {
+        title: "El impacto del sueño en tu salud mental",
+        excerpt: "Dormir bien no es un lujo, es una necesidad. Conoce la relación directa entre el descanso y tus emociones.",
+        category: "Salud",
+        date: "10 Dic, 2024",
+        readTime: "4 min",
+        image: "https://images.unsplash.com/photo-1511295742362-92c96b504802?q=80&w=2070&auto=format&fit=crop"
+    }
+];
 </script>
 
 <template>
@@ -205,41 +269,161 @@ defineProps<{
                         </div>
                         <h3 class="text-xl font-bold mb-3">Terapia Infantil</h3>
                         <p class="text-muted-foreground mb-6">
-                            Apoyo emocional y conductual para niños y adolescentes en un ambiente lúdico y comprensivo.
+                            Apoyo especializado para niños, ayudándoles a gestionar sus emociones y conductas de forma saludable.
                         </p>
                          <Link href="/contact" class="inline-flex items-center text-sm font-semibold text-primary hover:underline">
                             Agendar sesión <ArrowRight class="ml-1 h-3 w-3" />
                         </Link>
                     </div>
                 </div>
-             </div>
+            </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="py-20">
-            <div class="container max-w-6xl px-4 md:px-6 mx-auto">
-                <div class="bg-primary rounded-3xl p-8 md:p-16 text-center text-primary-foreground relative overflow-hidden">
-                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-                    <div class="relative z-10">
-                        <h2 class="text-3xl font-bold sm:text-4xl mb-6">¿Lista/o para dar el primer paso?</h2>
-                        <p class="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-10">
-                            No tienes que recorrer este camino en soledad. Estoy aquí para escucharte y acompañarte hacia tu bienestar.
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link href="/contact">
-                                <Button size="lg" variant="secondary" class="w-full sm:w-auto text-base h-14 px-10 font-bold rounded-full shadow-lg">
-                                    Agendar mi Cita Ahora
-                                </Button>
-                            </Link>
-                            <Link href="/register">
-                                <Button size="lg" variant="outline" class="w-full sm:w-auto text-base h-14 px-10 rounded-full border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground hover:text-primary backdrop-blur-sm">
-                                    Crear cuenta
-                                </Button>
-                            </Link>
+        <!-- Testimonials Section -->
+        <section class="py-20 bg-muted/30 relative overflow-hidden">
+             <div class="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-50"></div>
+            <div class="container px-4 md:px-6 mx-auto relative z-10">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">Lo que dicen mis pacientes</h2>
+                    <p class="text-muted-foreground text-lg">
+                        Historias reales de personas que han transformado sus vidas a través de la terapia.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div v-for="(testimonial, index) in testimonials" :key="index" class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative">
+                        <Quote class="absolute top-6 right-6 h-8 w-8 text-primary/10" />
+                        <div class="flex gap-1 mb-4">
+                            <Star v-for="i in 5" :key="i" class="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        </div>
+                        <p class="text-muted-foreground mb-6 italic">"{{ testimonial.text }}"</p>
+                        <div class="flex items-center gap-4">
+                            <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">
+                                {{ testimonial.initial }}
+                            </div>
+                            <div>
+                                <p class="font-semibold text-foreground">{{ testimonial.name }}</p>
+                                <p class="text-xs text-muted-foreground">Paciente verificado</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- FAQ Section -->
+        <section class="py-20">
+            <div class="container max-w-4xl px-4 md:px-6 mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">Preguntas Frecuentes</h2>
+                    <p class="text-muted-foreground text-lg">
+                        Respuestas a las dudas más comunes sobre el proceso terapéutico.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <Collapsible v-for="(faq, index) in faqs" :key="index" class="w-full border rounded-xl bg-white shadow-sm">
+                        <CollapsibleTrigger class="flex items-center justify-between w-full p-6 font-medium text-left group">
+                            {{ faq.question }}
+                            <ChevronDown class="h-5 w-5 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                        </CollapsibleTrigger>
+                        <CollapsibleContent class="px-6 pb-6 text-muted-foreground">
+                            {{ faq.answer }}
+                        </CollapsibleContent>
+                    </Collapsible>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section class="py-20 bg-muted/30">
+            <div class="container px-4 md:px-6 mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                    <div class="max-w-2xl">
+                        <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">Recursos para tu Bienestar</h2>
+                        <p class="text-muted-foreground text-lg">
+                            Artículos y consejos prácticos para acompañarte en tu día a día.
+                        </p>
+                    </div>
+                    <Button variant="outline" class="hidden md:inline-flex group">
+                        Ver todos los artículos
+                        <ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <article v-for="(post, index) in blogPosts" :key="index" class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-border group cursor-pointer">
+                        <div class="relative h-48 overflow-hidden">
+                            <div class="absolute inset-0 bg-primary/10 group-hover:bg-primary/5 transition-colors z-10"></div>
+                            <img :src="post.image" :alt="post.title" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                            <div class="absolute top-4 left-4 z-20">
+                                <span class="px-3 py-1 text-xs font-semibold bg-white/90 backdrop-blur-sm text-primary rounded-full shadow-sm">
+                                    {{ post.category }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 text-xs text-muted-foreground mb-3">
+                                <div class="flex items-center gap-1">
+                                    <Calendar class="h-3 w-3" />
+                                    {{ post.date }}
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <Clock class="h-3 w-3" />
+                                    {{ post.readTime }}
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                                {{ post.title }}
+                            </h3>
+                            <p class="text-muted-foreground text-sm line-clamp-3 mb-4">
+                                {{ post.excerpt }}
+                            </p>
+                            <div class="flex items-center text-primary font-medium text-sm">
+                                Leer más <ArrowUpRight class="ml-1 h-4 w-4" />
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="mt-8 text-center md:hidden">
+                    <Button variant="outline" class="w-full">
+                        Ver todos los artículos
+                    </Button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section class="py-24 bg-primary text-primary-foreground relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+             <!-- Decorative circles -->
+            <div class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-64 h-64 bg-secondary/20 rounded-full blur-3xl"></div>
+            
+            <div class="container px-4 md:px-6 mx-auto text-center relative z-10">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">¿Listo/a para dar el primer paso?</h2>
+                <p class="text-xl text-primary-foreground/90 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    No tienes que recorrer este camino en soledad. Agenda tu primera cita y empecemos a trabajar en tu bienestar hoy mismo.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <Link href="/contact">
+                        <Button size="lg" variant="secondary" class="h-14 px-8 text-lg rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
+                            Agendar mi Cita Ahora
+                            <ArrowRight class="ml-2 h-5 w-5" />
+                        </Button>
+                    </Link>
+                    <Link href="/services">
+                        <Button size="lg" variant="outline" class="h-14 px-8 text-lg rounded-full border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10 hover:text-white">
+                            Ver Servicios
+                        </Button>
+                    </Link>
+                </div>
+                <p class="mt-8 text-sm text-primary-foreground/60 flex items-center justify-center gap-2">
+                    <CheckCircle2 class="h-4 w-4" />
+                    Primera consulta de evaluación disponible
+                </p>
+            </div>
+        </section>
+
+
     </PublicLayout>
 </template>
