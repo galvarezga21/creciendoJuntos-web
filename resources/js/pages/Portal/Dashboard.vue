@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import PatientLayout from '@/layouts/PatientLayout.vue';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calendar, Video, Clock, ArrowRight, PlusCircle, History } from 'lucide-vue-next';
+import { computed } from 'vue';
 
 defineProps<{
-    user?: { name: string };
     nextAppointment?: {
         date: string;
         time: string;
@@ -14,6 +14,10 @@ defineProps<{
         type: string;
     };
 }>();
+
+const page = usePage();
+const user = computed(() => page.props.auth.user);
+const fullName = computed(() => user.value ? `${user.value.first_name} ${user.value.last_name}` : 'Paciente');
 </script>
 
 <template>
@@ -23,7 +27,7 @@ defineProps<{
             <!-- Welcome Section -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-900">Hola, {{ user?.name || 'Paciente' }}</h1>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-900">Hola, {{ fullName }}</h1>
                     <p class="text-slate-500">Bienvenido a tu espacio de bienestar.</p>
                 </div>
                 <Link href="/portal/appointments/new">

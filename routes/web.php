@@ -35,10 +35,9 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Portal Routes (Mockups)
-Route::prefix('portal')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('portal')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Portal/Dashboard', [
-            'user' => ['name' => 'Maria'],
             'nextAppointment' => [
                 'date' => '25 Oct',
                 'time' => '10:00 AM',
@@ -73,7 +72,7 @@ Route::prefix('portal')->group(function () {
 });
 
 // Admin Routes (Mockups)
-Route::prefix('admin')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
     })->name('admin.dashboard');
@@ -95,6 +94,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/roles', function () {
         return Inertia::render('Admin/Roles/Index');
     })->name('admin.roles');
+
+    require __DIR__.'/settings.php';
 });
 
-require __DIR__.'/settings.php';

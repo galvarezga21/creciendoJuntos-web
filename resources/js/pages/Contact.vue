@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,11 +7,29 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-vue-next';
+import { toast } from 'vue-sonner';
 
-const submitForm = (e: Event) => {
-    // Aquí iría la lógica real de envío o Inertia form
-    e.preventDefault();
-    alert('¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.');
+const form = useForm({
+    name: '',
+    phone: '',
+    email: '',
+    subject: '',
+    message: ''
+});
+
+const submitForm = () => {
+    // Simulamos envío exitoso ya que no hay backend
+    setTimeout(() => {
+        toast.success('¡Mensaje enviado!', {
+            description: 'Nos pondremos en contacto contigo pronto.'
+        });
+        form.reset();
+    }, 1000);
+    
+    // En una implementación real:
+    // form.post(route('contact.send'), {
+    //     onSuccess: () => form.reset(),
+    // });
 };
 </script>
 
@@ -27,7 +45,7 @@ const submitForm = (e: Event) => {
         </section>
 
         <section class="py-16 md:py-24">
-            <div class="container max-w-6xl mx-auto px-4">
+            <div class="container max-w-5xl mx-auto px-4 md:px-6">
                 <div class="grid lg:grid-cols-2 gap-12">
                     <!-- Contact Info -->
                     <div class="space-y-8">
@@ -93,34 +111,34 @@ const submitForm = (e: Event) => {
                     <!-- Contact Form -->
                     <div class="bg-white rounded-2xl shadow-xl border border-border p-8">
                         <h2 class="text-2xl font-bold mb-6">Envíame un mensaje</h2>
-                        <form @submit="submitForm" class="space-y-6">
+                        <form @submit.prevent="submitForm" class="space-y-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="space-y-2">
                                     <Label for="name">Nombre Completo</Label>
-                                    <Input id="name" placeholder="Tu nombre" required />
+                                    <Input id="name" v-model="form.name" placeholder="Tu nombre" required />
                                 </div>
                                 <div class="space-y-2">
                                     <Label for="phone">Teléfono</Label>
-                                    <Input id="phone" type="tel" placeholder="+51 999 999 999" />
+                                    <Input id="phone" v-model="form.phone" type="tel" placeholder="+51 999 999 999" />
                                 </div>
                             </div>
                             
                             <div class="space-y-2">
                                 <Label for="email">Correo Electrónico</Label>
-                                <Input id="email" type="email" placeholder="tucorreo@ejemplo.com" required />
+                                <Input id="email" v-model="form.email" type="email" placeholder="tucorreo@ejemplo.com" required />
                             </div>
 
                             <div class="space-y-2">
                                 <Label for="subject">Asunto</Label>
-                                <Input id="subject" placeholder="Consulta sobre terapia..." required />
+                                <Input id="subject" v-model="form.subject" placeholder="Consulta sobre terapia..." required />
                             </div>
 
                             <div class="space-y-2">
                                 <Label for="message">Mensaje</Label>
-                                <Textarea id="message" placeholder="Cuéntame brevemente cómo puedo ayudarte..." class="min-h-[150px]" required />
+                                <Textarea id="message" v-model="form.message" placeholder="Cuéntame brevemente cómo puedo ayudarte..." class="min-h-[150px]" required />
                             </div>
 
-                            <Button type="submit" class="w-full text-base h-12">
+                            <Button type="submit" class="w-full text-base h-12" :disabled="form.processing">
                                 <Send class="mr-2 h-4 w-4" /> Enviar Mensaje
                             </Button>
                         </form>

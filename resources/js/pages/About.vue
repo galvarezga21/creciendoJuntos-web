@@ -40,7 +40,7 @@ const experience = [
 
         <!-- Main Content -->
         <section class="py-16 md:py-24">
-            <div class="container max-w-6xl mx-auto px-4">
+            <div class="container max-w-5xl mx-auto px-4 md:px-6">
                 <div class="grid lg:grid-cols-2 gap-12 items-start">
                      <!-- Image -->
                     <div class="relative sticky top-24">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { 
@@ -11,6 +11,12 @@ import {
     DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { Calendar, Home, MessageCircle, Clock, User, LogOut } from 'lucide-vue-next';
+import { computed } from 'vue';
+
+const page = usePage();
+const user = computed(() => page.props.auth.user);
+const fullName = computed(() => user.value ? `${user.value.first_name} ${user.value.last_name}` : 'Usuario');
+const avatarSrc = computed(() => user.value?.profile_photo_url || user.value?.avatar || '');
 
 const navLinks = [
     { name: 'Inicio', href: '/portal/dashboard', icon: Home },
@@ -53,8 +59,8 @@ const navLinks = [
                         <DropdownMenuTrigger as-child>
                             <Button variant="ghost" class="relative h-10 w-10 rounded-full">
                                 <Avatar class="h-9 w-9 border border-slate-200">
-                                    <AvatarImage src="https://github.com/shadcn.png" alt="User" />
-                                    <AvatarFallback>CN</AvatarFallback>
+                                    <AvatarImage :src="avatarSrc" :alt="fullName" />
+                                    <AvatarFallback>{{ fullName.charAt(0).toUpperCase() }}</AvatarFallback>
                                 </Avatar>
                             </Button>
                         </DropdownMenuTrigger>

@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -17,12 +18,22 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $users = User::with(['role', 'country'])->latest()->get();
+        $query = User::with(['role', 'country'])->latest();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('first_name', 'like', "%{$search}%")
+                  ->orWhere('last_name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
 
         return Inertia::render('Admin/Users/Index', [
-            'users' => $users,
+            'users' => $query->get(),
+            'filters' => $request->only(['search']),
         ]);
     }
 
@@ -88,12 +99,19 @@ class UserController extends Controller
             'address' => 'nullable|string|max:255',
             'is_active' => 'boolean',
             'password' => 'nullable|string|min:8',
+            'photo' => 'nullable|image|max:1024',
         ]);
 
         if (empty($validated['password'])) {
             unset($validated['password']);
         }
-        // If password is present, the model cast will hash it.
+        
+        if ($request->hasFile('photo')) {
+            if ($user->profile_photo_path) {
+                Storage::disk('public')->delete($user->profile_photo_path);
+            }
+            $validated['profile_photo_path'] = $request->file('photo')->store('profile-photos', 'public');
+        }
 
         $user->update($validated);
 

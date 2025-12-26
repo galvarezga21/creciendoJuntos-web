@@ -14,6 +14,8 @@ import {
     DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { Search, MoreHorizontal, UserPlus, Filter, Pencil, Trash } from 'lucide-vue-next';
+import { ref, watch } from 'vue';
+import { useDebounceFn } from '@vueuse/core';
 
 const props = defineProps<{
     users: Array<{
@@ -22,11 +24,28 @@ const props = defineProps<{
         last_name: string;
         email: string;
         profile_photo_path: string | null;
-        role: { name: string; slug: string };
+        profile_photo_url?: string;
+        role: { name: string; slug: string } | null;
         is_active: boolean;
-        full_name?: string; // Accessor
     }>;
+    filters?: {
+        search?: string;
+    };
 }>();
+
+const search = ref(props.filters?.search || '');
+
+const handleSearch = useDebounceFn((value: string) => {
+    router.get(route('admin.users.index'), { search: value }, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true,
+    });
+}, 300);
+
+watch(search, (value) => {
+    handleSearch(value);
+});
 
 const deleteUser = (id: number) => {
     if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
@@ -35,7 +54,7 @@ const deleteUser = (id: number) => {
 };
 
 const getInitials = (firstName: string, lastName: string) => {
-    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+    return `${firstName?.charAt(0) || ''}${lastName?.charAt(0) || ''}`.toUpperCase();
 };
 </script>
 
@@ -58,7 +77,7 @@ const getInitials = (firstName: string, lastName: string) => {
                     <div class="flex items-center justify-between gap-4">
                         <div class="relative flex-1 max-w-sm">
                             <Search class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                            <Input placeholder="Buscar por nombre o email..." class="pl-9" />
+                            <Input v-model="search" placeholder="Buscar por nombre o email..." class="pl-9" />
                         </div>
                         <Button variant="outline" size="icon">
                             <Filter class="h-4 w-4" />
@@ -82,7 +101,7 @@ const getInitials = (firstName: string, lastName: string) => {
                                 <tr v-for="user in users" :key="user.id" class="border-t hover:bg-muted/50 transition-colors">
                                     <td class="p-4">
                                         <Avatar class="h-8 w-8">
-                                            <AvatarImage :src="user.profile_photo_path ? '/storage/' + user.profile_photo_path : ''" />
+                                            <AvatarImage :src="user.profile_photo_url || ''" :alt="user.first_name" />
                                             <AvatarFallback>{{ getInitials(user.first_name, user.last_name) }}</AvatarFallback>
                                         </Avatar>
                                     </td>

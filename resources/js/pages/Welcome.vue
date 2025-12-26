@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ArrowRight, Heart, Shield, Sparkles, Brain, Quote, Star, ChevronDown, CheckCircle2, Calendar, Clock, ArrowUpRight } from 'lucide-vue-next';
 
 defineProps<{

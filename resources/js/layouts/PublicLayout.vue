@@ -238,5 +238,6 @@ const navLinks = [
         </div>
       </div>
     </footer>
+    <Toaster />
   </div>
 </template>
