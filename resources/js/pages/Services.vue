@@ -110,7 +110,7 @@ const services = [
 
         <!-- Pricing / CTA -->
         <section class="py-20 bg-slate-50 dark:bg-slate-900/50">
-            <div class="container mx-auto px-4 text-center">
+            <div class="container max-w-6xl mx-auto px-4 text-center">
                 <h2 class="text-3xl font-bold mb-6">¿Tienes dudas sobre qué servicio es para ti?</h2>
                 <p class="text-muted-foreground mb-8 max-w-xl mx-auto">
                     No te preocupes. En nuestra primera consulta de evaluación podremos definir juntos el mejor plan de acción para tu bienestar.

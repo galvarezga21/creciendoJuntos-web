@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/vue3';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 import { Button } from '@/components/ui/button';
 import { Link } from '@inertiajs/vue3';
-import { ArrowRight, BookOpen, Award, GraduationCap, Briefcase, UserCheck } from 'lucide-vue-next';
+import { ArrowRight, BookOpen, Award, GraduationCap, Briefcase, UserCheck, Brain, Heart } from 'lucide-vue-next';
 
 const experience = [
     {
@@ -41,21 +41,32 @@ const experience = [
 
         <!-- Main Content -->
         <section class="py-16 md:py-24">
-            <div class="container mx-auto px-4">
+            <div class="container max-w-6xl mx-auto px-4">
                 <div class="grid lg:grid-cols-2 gap-12 items-start">
                      <!-- Image -->
                     <div class="relative sticky top-24">
                         <div class="absolute inset-0 bg-secondary/20 rounded-3xl transform translate-x-4 translate-y-4"></div>
-                        <div class="relative rounded-3xl shadow-xl overflow-hidden aspect-[4/5]">
-                            <img 
-                                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop" 
-                                alt="Diana Campos" 
-                                class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                            />
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 text-white">
-                                <p class="font-bold text-lg">Psic. Diana Campos</p>
-                                <p class="text-sm opacity-90">C.Ps.P. 12345</p>
-                            </div>
+                        
+                         <!-- Main Image Placeholder - Simbolo Psicología -->
+                        <div class="relative overflow-hidden rounded-3xl shadow-xl border-4 border-white bg-white shadow-primary/20 aspect-[4/5] w-full max-w-sm lg:max-w-md mx-auto flex flex-col items-center justify-center">
+                             <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-white to-secondary/5"></div>
+                             
+                             <!-- Psychology Symbol (Brain + Heart concept) -->
+                             <div class="relative z-10 flex flex-col items-center justify-center text-primary/80 transition-transform duration-700 hover:scale-105 mb-16">
+                                <Brain class="h-32 w-32 md:h-48 md:w-48 lg:h-56 lg:w-56 drop-shadow-lg transition-all duration-500" stroke-width="1" />
+                                <div class="mt-4 md:mt-8 text-center space-y-2">
+                                    <div class="inline-flex items-center justify-center p-2 md:p-3 rounded-full bg-primary/10 mb-2">
+                                        <Heart class="h-5 w-5 md:h-6 md:w-6 text-primary fill-primary/20" />
+                                    </div>
+                                </div>
+                             </div>
+
+                             <div class="absolute bottom-4 md:bottom-6 left-0 right-0 z-20 text-center">
+                                 <div class="mx-4 md:mx-6 p-3 md:p-4 rounded-xl bg-white/80 backdrop-blur-md border border-primary/10 shadow-lg">
+                                     <p class="font-bold text-base md:text-lg text-primary">Psic. Diana Campos</p>
+                                     <p class="text-xs md:text-sm text-muted-foreground">C.Ps.P. 12345</p>
+                                 </div>
+                             </div>
                         </div>
                     </div>
 

@@ -22,10 +22,10 @@ defineProps<{
                 <div class="h-96 w-96 rounded-full bg-secondary/30"></div>
             </div>
             
-            <div class="container px-4 md:px-6 mx-auto">
-                <div class="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center">
-                    <div class="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-                        <div class="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary backdrop-blur-sm">
+            <div class="container max-w-5xl px-4 md:px-6 mx-auto">
+                <div class="grid gap-12 lg:grid-cols-2 lg:gap-12 items-center">
+                    <div class="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 text-center lg:text-left">
+                        <div class="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary backdrop-blur-sm mx-auto lg:mx-0">
                             <span class="flex h-2 w-2 rounded-full bg-secondary mr-2"></span>
                             Consultorio Virtual
                         </div>
@@ -68,18 +68,25 @@ defineProps<{
                         <div class="absolute -top-12 -left-12 h-24 w-24 rounded-full bg-secondary/40 blur-2xl animate-pulse"></div>
                         <div class="absolute -bottom-12 -right-12 h-32 w-32 rounded-full bg-primary/30 blur-2xl animate-pulse delay-700"></div>
                         
-                        <!-- Main Image Placeholder - Idealmente una foto de Diana -->
-                        <div class="relative overflow-hidden rounded-2xl shadow-2xl border-4 border-white bg-white/50 backdrop-blur-sm aspect-[4/5] max-w-md mx-auto transform rotate-2 hover:rotate-0 transition-all duration-500">
-                             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10"></div>
-                             <!-- Placeholder Image -->
-                             <img 
-                                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop" 
-                                alt="Psicóloga Diana Campos" 
-                                class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-                             />
-                             <div class="absolute bottom-6 left-6 z-20 text-white">
-                                 <p class="font-semibold text-lg">Psic. Diana Campos</p>
-                                 <p class="text-sm text-white/80">Especialista en Terapia Cognitivo Conductual</p>
+                        <!-- Main Image Placeholder - Simbolo Psicología -->
+                        <div class="relative overflow-hidden rounded-2xl shadow-2xl border-4 border-white bg-white shadow-primary/20 aspect-[4/5] w-full max-w-sm lg:max-w-md mx-auto transform rotate-2 hover:rotate-0 transition-all duration-500 flex items-center justify-center">
+                             <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-white to-secondary/5"></div>
+                             
+                             <!-- Psychology Symbol (Brain + Heart concept) -->
+                             <div class="relative z-10 flex flex-col items-center justify-center text-primary/80 transition-transform duration-700 hover:scale-105">
+                                <Brain class="h-32 w-32 md:h-48 md:w-48 lg:h-56 lg:w-56 drop-shadow-lg transition-all duration-500" stroke-width="1" />
+                                <div class="mt-4 md:mt-8 text-center space-y-2">
+                                    <div class="inline-flex items-center justify-center p-2 md:p-3 rounded-full bg-primary/10 mb-2">
+                                        <Heart class="h-5 w-5 md:h-6 md:w-6 text-primary fill-primary/20" />
+                                    </div>
+                                </div>
+                             </div>
+
+                             <div class="absolute bottom-4 md:bottom-6 left-0 right-0 z-20 text-center">
+                                 <div class="mx-4 md:mx-6 p-3 md:p-4 rounded-xl bg-white/80 backdrop-blur-md border border-primary/10 shadow-lg">
+                                     <p class="font-bold text-base md:text-lg text-primary">Psic. Diana Campos</p>
+                                     <p class="text-xs md:text-sm text-muted-foreground">Especialista en Terapia Cognitivo Conductual</p>
+                                 </div>
                              </div>
                         </div>
                     </div>
@@ -209,24 +216,28 @@ defineProps<{
         </section>
 
         <!-- CTA Section -->
-        <section class="py-20 bg-primary text-primary-foreground relative overflow-hidden">
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-            <div class="container px-4 md:px-6 mx-auto relative z-10 text-center">
-                <h2 class="text-3xl font-bold sm:text-4xl mb-6">¿Lista/o para dar el primer paso?</h2>
-                <p class="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-10">
-                    No tienes que recorrer este camino en soledad. Estoy aquí para escucharte y acompañarte hacia tu bienestar.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                     <Link href="/contact">
-                        <Button size="lg" variant="secondary" class="w-full sm:w-auto text-base h-14 px-10 font-bold rounded-full shadow-lg">
-                            Agendar mi Cita Ahora
-                        </Button>
-                    </Link>
-                    <Link href="/register">
-                         <Button size="lg" variant="outline" class="w-full sm:w-auto text-base h-14 px-10 rounded-full border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground hover:text-primary backdrop-blur-sm">
-                            Crear cuenta
-                        </Button>
-                    </Link>
+        <section class="py-20">
+            <div class="container max-w-6xl px-4 md:px-6 mx-auto">
+                <div class="bg-primary rounded-3xl p-8 md:p-16 text-center text-primary-foreground relative overflow-hidden">
+                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                    <div class="relative z-10">
+                        <h2 class="text-3xl font-bold sm:text-4xl mb-6">¿Lista/o para dar el primer paso?</h2>
+                        <p class="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-10">
+                            No tienes que recorrer este camino en soledad. Estoy aquí para escucharte y acompañarte hacia tu bienestar.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <Link href="/contact">
+                                <Button size="lg" variant="secondary" class="w-full sm:w-auto text-base h-14 px-10 font-bold rounded-full shadow-lg">
+                                    Agendar mi Cita Ahora
+                                </Button>
+                            </Link>
+                            <Link href="/register">
+                                <Button size="lg" variant="outline" class="w-full sm:w-auto text-base h-14 px-10 rounded-full border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground hover:text-primary backdrop-blur-sm">
+                                    Crear cuenta
+                                </Button>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

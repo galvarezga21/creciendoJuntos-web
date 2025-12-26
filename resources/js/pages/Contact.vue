@@ -27,7 +27,7 @@ const submitForm = (e: Event) => {
         </section>
 
         <section class="py-16 md:py-24">
-            <div class="container mx-auto px-4">
+            <div class="container max-w-6xl mx-auto px-4">
                 <div class="grid lg:grid-cols-2 gap-12">
                     <!-- Contact Info -->
                     <div class="space-y-8">
