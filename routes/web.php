@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -23,7 +25,13 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
+    $user = Auth::user();
+    
+    if ($user->role && ($user->role->slug === 'admin' || $user->role->slug === 'psychologist' || $user->role->slug === 'accountant')) {
+        return redirect()->route('admin.dashboard');
+    }
+
+    return redirect()->route('portal.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Portal Routes (Mockups)
@@ -74,9 +82,15 @@ Route::prefix('admin')->group(function () {
         return Inertia::render('Admin/Appointments/Pending');
     })->name('admin.appointments.pending');
 
-    Route::get('/users', function () {
-        return Inertia::render('Admin/Users/Index');
-    })->name('admin.users');
+    Route::resource('users', UserController::class)->names([
+        'index' => 'admin.users.index',
+        'create' => 'admin.users.create',
+        'store' => 'admin.users.store',
+        'show' => 'admin.users.show',
+        'edit' => 'admin.users.edit',
+        'update' => 'admin.users.update',
+        'destroy' => 'admin.users.destroy',
+    ]);
 
     Route::get('/roles', function () {
         return Inertia::render('Admin/Roles/Index');

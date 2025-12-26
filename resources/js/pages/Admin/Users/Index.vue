@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
+import { route } from 'ziggy-js';
 import AdminLayout from '@/layouts/AdminLayout.vue';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -10,25 +11,31 @@ import {
     DropdownMenu, 
     DropdownMenuContent, 
     DropdownMenuItem, 
-    DropdownMenuLabel, 
     DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
-import { Search, MoreHorizontal, UserPlus, Filter } from 'lucide-vue-next';
+import { Search, MoreHorizontal, UserPlus, Filter, Pencil, Trash } from 'lucide-vue-next';
 
-// Mock Data
-const users = [
-    { id: 1, name: 'Juan Pérez', email: 'juan@example.com', role: 'patient', status: 'active', avatar: '' },
-    { id: 2, name: 'Diana Campos', email: 'diana@creciendojuntos.com', role: 'admin', status: 'active', avatar: '/img/psychologist.jpg' },
-    { id: 3, name: 'Maria Garcia', email: 'maria@example.com', role: 'patient', status: 'inactive', avatar: '' },
-    { id: 4, name: 'Carlos Ruiz', email: 'carlos@example.com', role: 'patient', status: 'active', avatar: '' },
-    { id: 5, name: 'Contabilidad', email: 'conta@creciendojuntos.com', role: 'accountant', status: 'active', avatar: '' },
-];
+const props = defineProps<{
+    users: Array<{
+        id: number;
+        first_name: string;
+        last_name: string;
+        email: string;
+        profile_photo_path: string | null;
+        role: { name: string; slug: string };
+        is_active: boolean;
+        full_name?: string; // Accessor
+    }>;
+}>();
 
-const roleMap: Record<string, string> = {
-    patient: 'Paciente',
-    admin: 'Administrador',
-    accountant: 'Contador',
-    psychologist: 'Psicólogo'
+const deleteUser = (id: number) => {
+    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+        router.delete(route('admin.users.destroy', id));
+    }
+};
+
+const getInitials = (firstName: string, lastName: string) => {
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 };
 </script>
 
@@ -38,10 +45,12 @@ const roleMap: Record<string, string> = {
         <div class="flex flex-col gap-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <h1 class="text-3xl font-bold tracking-tight">Gestión de Usuarios</h1>
-                <Button>
-                    <UserPlus class="mr-2 h-4 w-4" />
-                    Crear Usuario
-                </Button>
+                <Link :href="route('admin.users.create')">
+                    <Button>
+                        <UserPlus class="mr-2 h-4 w-4" />
+                        Crear Usuario
+                    </Button>
+                </Link>
             </div>
 
             <Card>
@@ -73,21 +82,21 @@ const roleMap: Record<string, string> = {
                                 <tr v-for="user in users" :key="user.id" class="border-t hover:bg-muted/50 transition-colors">
                                     <td class="p-4">
                                         <Avatar class="h-8 w-8">
-                                            <AvatarImage :src="user.avatar" />
-                                            <AvatarFallback>{{ user.name.substring(0,2).toUpperCase() }}</AvatarFallback>
+                                            <AvatarImage :src="user.profile_photo_path ? '/storage/' + user.profile_photo_path : ''" />
+                                            <AvatarFallback>{{ getInitials(user.first_name, user.last_name) }}</AvatarFallback>
                                         </Avatar>
                                     </td>
-                                    <td class="p-4 font-medium">{{ user.name }}</td>
+                                    <td class="p-4 font-medium">{{ user.first_name }} {{ user.last_name }}</td>
                                     <td class="p-4 text-muted-foreground">{{ user.email }}</td>
                                     <td class="p-4">
                                         <Badge variant="secondary" class="capitalize">
-                                            {{ roleMap[user.role] || user.role }}
+                                            {{ user.role?.name || 'Sin Rol' }}
                                         </Badge>
                                     </td>
                                     <td class="p-4">
                                         <div class="flex items-center gap-2">
-                                            <span class="h-2 w-2 rounded-full" :class="user.status === 'active' ? 'bg-green-500' : 'bg-slate-300'"></span>
-                                            <span class="capitalize">{{ user.status === 'active' ? 'Activo' : 'Inactivo' }}</span>
+                                            <span class="h-2 w-2 rounded-full" :class="user.is_active ? 'bg-green-500' : 'bg-slate-300'"></span>
+                                            <span class="capitalize">{{ user.is_active ? 'Activo' : 'Inactivo' }}</span>
                                         </div>
                                     </td>
                                     <td class="p-4 text-right">
@@ -99,12 +108,23 @@ const roleMap: Record<string, string> = {
                                                 </Button>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
-                                                <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-                                                <DropdownMenuItem>Editar Usuario</DropdownMenuItem>
-                                                <DropdownMenuItem>Ver Detalles</DropdownMenuItem>
-                                                <DropdownMenuItem class="text-red-600">Desactivar</DropdownMenuItem>
+                                                <Link :href="route('admin.users.edit', user.id)">
+                                                    <DropdownMenuItem>
+                                                        <Pencil class="mr-2 h-4 w-4" />
+                                                        Editar
+                                                    </DropdownMenuItem>
+                                                </Link>
+                                                <DropdownMenuItem @click="deleteUser(user.id)" class="text-red-600 focus:text-red-600">
+                                                    <Trash class="mr-2 h-4 w-4" />
+                                                    Eliminar
+                                                </DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
+                                    </td>
+                                </tr>
+                                <tr v-if="users.length === 0">
+                                    <td colspan="6" class="p-8 text-center text-muted-foreground">
+                                        No hay usuarios registrados.
                                     </td>
                                 </tr>
                             </tbody>
