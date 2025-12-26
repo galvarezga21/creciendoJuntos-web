@@ -11,17 +11,26 @@ import {
 import { Menu, Instagram, Facebook, Mail, Phone, MapPin } from 'lucide-vue-next';
 
 const isScrolled = ref(false);
+const isMobileMenuOpen = ref(false);
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 20;
 };
 
+const handleResize = () => {
+  if (window.innerWidth >= 768) {
+    isMobileMenuOpen.value = false;
+  }
+};
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
+  window.addEventListener('resize', handleResize);
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('resize', handleResize);
 });
 
 const navLinks = [
@@ -84,51 +93,49 @@ const navLinks = [
         </div>
 
         <!-- Mobile Menu -->
-        <Sheet>
+        <Sheet v-model:open="isMobileMenuOpen">
           <SheetTrigger as-child>
             <Button variant="ghost" size="icon" class="md:hidden">
               <Menu class="h-6 w-6 text-primary" />
               <span class="sr-only">Abrir menú</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" class="w-[300px] sm:w-[400px]">
-            <div class="flex flex-col h-full py-6">
-              <div class="flex items-center gap-3 mb-8">
+          <SheetContent side="top" class="w-full border-b-0 shadow-2xl rounded-b-[2rem]" overlay-class="bg-transparent backdrop-blur-none">
+            <div class="flex flex-col h-full py-8 px-6 max-w-sm mx-auto">
+              <div class="flex items-center justify-center gap-3 mb-8">
                  <div class="flex h-12 w-12 items-center justify-center rounded-full overflow-hidden bg-white shadow-sm">
                     <img src="/logo-creciendo-juntos.png" alt="Logo" class="h-full w-full object-cover" />
                  </div>
                  <span class="font-bold text-lg text-primary">Creciendo Juntos</span>
               </div>
               
-              <nav class="flex flex-col gap-4 mb-8">
-                 <Link 
-                    v-for="link in navLinks" 
-                    :key="link.href" 
-                    :href="link.href"
-                    class="text-lg font-medium py-2 border-b border-border/50 hover:text-primary transition-colors"
-                    :class="{ 'text-primary border-primary': $page.url === link.href }"
-                  >
-                    <SheetClose class="w-full text-left">
-                        {{ link.name }}
-                    </SheetClose>
-                  </Link>
+              <nav class="flex flex-col gap-4 mb-8 items-center text-center">
+                <Link 
+                  v-for="link in navLinks" 
+                  :key="link.href" 
+                  :href="link.href"
+                  class="text-lg font-medium transition-colors hover:text-primary py-2 border-b-2 border-transparent w-fit"
+                  :class="{ 'text-primary font-bold border-primary': $page.url === link.href, 'text-muted-foreground': $page.url !== link.href }"
+                >
+                  {{ link.name }}
+                </Link>
               </nav>
 
-              <div class="mt-auto flex flex-col gap-4">
-                 <Link href="/contact" class="w-full">
-                    <SheetClose class="w-full">
-                        <Button class="w-full rounded-full" size="lg">Agendar Cita</Button>
-                    </SheetClose>
+              <div class="flex flex-col gap-4 mt-auto items-center w-full">
+                 <Link v-if="!$page.props.auth?.user" href="/login" class="w-full sm:w-auto">
+                  <Button variant="outline" class="w-full sm:w-64 justify-center rounded-full h-12 text-base">
+                    Iniciar Sesión
+                  </Button>
                  </Link>
-                 <Link v-if="!$page.props.auth?.user" href="/login" class="w-full">
-                    <SheetClose class="w-full">
-                        <Button variant="outline" class="w-full rounded-full" size="lg">Iniciar Sesión</Button>
-                    </SheetClose>
+                 <Link v-else href="/dashboard" class="w-full sm:w-auto">
+                  <Button variant="outline" class="w-full sm:w-64 justify-center rounded-full h-12 text-base">
+                    Mi Panel
+                  </Button>
                  </Link>
-                 <Link v-else href="/dashboard" class="w-full">
-                    <SheetClose class="w-full">
-                        <Button variant="outline" class="w-full rounded-full" size="lg">Mi Panel</Button>
-                    </SheetClose>
+                 <Link href="/contact" class="w-full sm:w-auto">
+                   <Button class="w-full sm:w-64 justify-center rounded-full h-12 text-base shadow-lg shadow-primary/20">
+                      Agendar Cita
+                   </Button>
                  </Link>
               </div>
             </div>
